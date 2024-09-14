@@ -1,7 +1,7 @@
 <template>
     <div class="bookings">
       <h2>Bookings</h2>
-      <form @submit.prevent="createBooking">
+      <form @submit.prevent="makeBooking">
         <select v-model="idmenu">
           <option value="1">First Course</option>
           <option value="2">Second Course</option>
@@ -19,17 +19,12 @@
         <button type="submit">Book</button>
       </form>
   
-      <h3>Your Bookings</h3>
-      <ul>
-        <li v-for="booking in bookings" :key="booking.idbookings">
-          {{ booking.date }} - {{ booking.numberofpeople }} People, {{ booking.numberofdogs }} Dogs
-        </li>
-      </ul>
+
     </div>
   </template>
   
   <script>
-  import api from '../services/api';
+
   
   export default {
     data() {
@@ -40,34 +35,20 @@
         numberofdogs: '',
         foodbrand: '',
         time: '',
-        bookings: []
       };
     },
-    async created() {
-      try {
-        const response = await api.get('/bookings');
-        this.bookings = response.data;
-      } catch (error) {
-        console.error(error);
+    methods: {
+      makeBooking(){
+        this.$store.dispatch('insertBooking',{idmenu:this.idmenu,
+          date:this.date,
+          numberofpeople:this.numberofpeople,
+          numberofdogs:this.numberofdogs,
+          foodbrand:this.foodbrand,
+          time:this.time})
       }
     },
-    methods: {
-      async createBooking() {
-        try {
-          await api.post('/bookings', {
-            idmenu: this.idmenu,
-            date: this.date,
-            numberofpeople: this.numberofpeople,
-            numberofdogs: this.numberofdogs,
-            foodbrand: this.foodbrand,
-            time: this.time
-          });
-          this.$router.push('/');
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    }
-  };
+  
+  }
+
   </script>
   
