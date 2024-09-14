@@ -1,4 +1,4 @@
-# frontend-vue
+# matesandmuttseatery
 
 ## Project setup
 ```
