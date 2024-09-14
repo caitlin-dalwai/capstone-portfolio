@@ -11,6 +11,7 @@ const getBooking = async(req,res)=>{
 const insertBooking = async(req,res)=>{
     try {
         const {idusers,idmenu,date,numberofpeople,numberofdogs,foodbrand,time} = req.body
+        console.log(idusers,idmenu,date,numberofpeople,numberofdogs,foodbrand,time)
             await insertBookingDb(idusers,idmenu,date,numberofpeople,numberofdogs,foodbrand,time)
             res.status(200)
             res.json({message: 'thank you for booking with us!'})
@@ -35,12 +36,13 @@ const updateBooking = async(req,res)=>{
     time? time=time: time=storeData.time
 
     await updateBookingDb(idusers,idmenu,date,numberofpeople,numberofdogs,foodbrand,time,idbookings)
-    res.send('im workinggg')
+    res.json({message:'booking has been updated',data:await getAllBookingsDb()})
 }
 
 const deleteBooking = async(req,res)=>{
     await deleteBookingDb(req.params.id)
-    res.send("booking has been canceled")
+    res.json({message:'booking has been cancelled',data:await getAllBookingsDb()})
+    
 }
 
 export {getAllBookings, getBooking, insertBooking, updateBooking, deleteBooking}
