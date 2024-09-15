@@ -1,24 +1,28 @@
-import {hash} from 'jsonwebtoken'
+import { getEmailDb } from '../model/usersDb.js';
+import { compare } from "bcrypt";
+import jwt from 'jsonwebtoken'
 
 const checkUser = async (req,res, next)=>{
-    let {email_add, user_pass}= req.body
-    console.log(email_add, user_pass)
-    let storedPassword = await getUserEmailDb(email_add)
-    console.log(storedPassword)
-  if(!storedPassword){
+    let {email, password}= req.body
+    console.log(email, password)
+    let dbData = await getEmailDb(email)
+    
+    console.log(dbData)
+  if(!dbData){
+    res.status(404)
     res.json({
-      message:"Looks like you haven't signed up yet :("
+      message:"user not found"
    })
   }else{
-  console.log(storedPassword.user_id)
-  compare(user_pass, storedPassword.user_pass, (err, hash)=>{
+  console.log(dbData.idusers)
+  compare(password, dbData.password, (err, hash)=>{
     if (!hash) {
+      res.status(401)
       res.json({
-        message:"Passwords don't match! :("
+        message:"Incorrect password"
      })
-      res.status(400)
     } else{
-      let token = jwt.sign({id:storedPassword.user_id, email_add:email_add}, process.env.TOKEN_SECRET, { expiresIn: '1h' })
+      let token = jwt.sign({id:dbData.idusers, email:email}, process.env.TOKEN_SECRET, { expiresIn: '1h' })
       req.body.token = token
       console.log(token)
       res.status(200)
@@ -28,8 +32,25 @@ const checkUser = async (req,res, next)=>{
   }
   
   }
-  const verifyToken = async(req,res,next)=>{
-    
-  }
+ 
+const verifyToken =(req,res,next)=>{
+  console.log(req.headers);
+  
+  let token = req.headers.authorization
+  console.log('token is'+token)
 
-  export{checkUser, verifyToken}
+  jwt.verify(token, process.env.TOKEN_SECRET,(err,decoded)=>{
+      if(err){
+          res.json({message:'Token has expired', error: err, cookie:token})
+          return
+      }
+      
+      req.body.user = decoded
+      console.log(decoded);
+      next()
+  })
+  
+  
+}
+
+export { checkUser,verifyToken };

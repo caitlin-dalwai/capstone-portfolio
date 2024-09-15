@@ -1,5 +1,5 @@
-import { getAllUsersDb, getUserDb, insertUserDb, updateUserDb, deleteUserDb } from "../model/usersDb.js";
-
+import { getAllUsersDb, getUserDb, insertUserDb, updateUserDb, deleteUserDb, getEmailDb } from "../model/usersDb.js";
+import { hash } from "bcrypt";
 
 const getAllUsers = async(req,res)=>{
     res.json(await getAllUsersDb())
@@ -12,14 +12,26 @@ const getUser = async(req,res)=>{
 const insertUser = async(req,res)=>{
     try {
         const {email,password,name,surname,profilepic} = req.body
-    await insertUserDb(email,password,name,surname,profilepic)
-    res.status(200)
-    res.json({message:'user was inserted successfully!'})
-    } catch (error) {
-        res.status(500)
-    res.json({message:error})
-    }
-}
+        let dbData = await getEmailDb(email)
+        if (dbData) {
+            res.status(500)
+            res.json({message:'this email already exists'})
+            return
+            
+        }
+        
+        let hashedPassword = hash(password, 10, async (err, hash)=>{
+            if(err){
+               throw (err)
+            }else{ 
+                await insertUserDb(email,hash,name,surname,profilepic)
+            res.status(200)
+            res.json({message:`user was inserted successfully! `})}
+               })} catch (err) {
+                  res.status(500)
+               res.json({message:err})
+               }
+      }
 
 const updateUser = async(req,res)=>{
     let idusers= req.params.id
@@ -43,4 +55,10 @@ const deleteUser = async(req,res)=>{
     res.send("user was successfully deleted")
 }
 
-export{getAllUsers, getUser, insertUser, updateUser, deleteUser}
+const loginUser = async(req,res)=>{
+    res.json({
+        message:"You are signed in",
+        token:req.body.token
+     })
+}
+export{getAllUsers, getUser,loginUser, insertUser, updateUser, deleteUser}
