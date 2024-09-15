@@ -8,7 +8,7 @@ let port = 7777
 
 app.use(express.json())
 app.use(cors({
-    origin:"http://localhost:8080",
+    origin:"*",
     credentials:true,
     headers:['Content-Type','Authorization']
 }
