@@ -22,7 +22,7 @@
     methods: {
       async login() {
         try {
-          const response = await api.post('/users/login', {
+          const response = await api.post('/users/loginnm,', {
             email: this.email,
             password: this.password
           });

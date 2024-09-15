@@ -22,13 +22,18 @@
                     </li>
                     
                      <li class="nav-item">
-                     <router-link class="nav-link" :class="{ active: $route.path=== '/register' }" id="col" to="/register">Register</router-link>
+                     <router-link class="nav-link" :class="{ active: $route.path=== '/loginv' }" id="col" to="/register">Register</router-link>
                     </li>
                     <li class="nav-item">
                       <router-link class="nav-link" :class="{ active: $route.path=== '/contact' }" id="col" to="/contact">Contact</router-link>
                     </li>
-                    <ul class="admin-icon">
+                    <!-- <ul class="admin-icon">
                     <li class="nav-item">
+                    </li>
+                </ul> -->
+                <ul class="admin-icon">
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/admin"><i class="bi bi-person-fill-gear"></i></router-link>
                         <router-link class="nav-link" to="/admin"><i class="bi bi-person-circle icon"></i></router-link>
                     </li>
                 </ul>
@@ -86,7 +91,14 @@ nav a.router-link-exact-active {
     border-bottom: 2px solid black;
 }
 .admin-icon { 
-    margin-left: 8rem;
+    display:flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+    list-style:none;
+
+}
+.admin-icon >li { 
+    display: inline-flex;
 }
 
 

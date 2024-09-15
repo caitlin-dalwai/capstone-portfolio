@@ -21,8 +21,7 @@
   </li>
 </ul>
 
-<button class="btn mt-auto w-100" style="font-size: 20px; font-family: Bungee Inline; background-color: #EB631B; height: 58px !important; width: 161px !important; border: #EB631B 3px solid; border-radius: 100%; color: white;">BOOK NOW</button>
-<router-link class="nav-link text-white" to="/bookingv" style="font-size: 20px; font-family: Bungee Inline;" >Facilities</router-link>                   
+<button class="btn mt-auto w-100" style="font-size: 20px; font-family: Bungee Inline; background-color: #EB631B; height: 58px !important; width: 161px !important; border: #EB631B 3px solid; border-radius: 100%; color: white;" @click="pushTo('/bookingv')">BOOK NOW</button>
 
             </div>
             <div class="col align-self-end" style="margin-left: 25%; margin-top: 4%;">
@@ -39,6 +38,7 @@
 
 <script>
 import CarrouselComp from '@/components/CarrouselComp.vue';
+import router from '@/router'
 
 // @ is an alias to /src
 
@@ -46,7 +46,12 @@ export default {
   name: 'HomeView',
   components: {
     CarrouselComp
+  },
+  methods:{
+    pushTo(route) {
+      router.push(route)
   }
+}
 }
 </script>
 <style scoped>

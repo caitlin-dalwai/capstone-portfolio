@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div v-if="$cookies.get('token')">
+      <div>
       <BookingsComp />
       <h3>Your Bookings</h3>
       
@@ -62,6 +63,12 @@
 </table>
        
     </div>
+  </div>
+  <div v-else>
+    <h1 class="mt-5">Please <router-link to="/register">SIGN IN </router-link>to view your bookings</h1>
+
+
+  </div>
   </template>
   
   <script>

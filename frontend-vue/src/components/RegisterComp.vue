@@ -1,3 +1,50 @@
+<!-- <template>
+    <div class="register">
+      <h2>Register</h2>
+      <form @submit.prevent="register">
+        <input v-model="email" placeholder="Email" type="email" />
+        <input v-model="password" placeholder="Password" type="password" />
+        <input v-model="name" placeholder="First Name" />
+        <input v-model="surname" placeholder="Last Name" />
+        <input v-model="profilepic" placeholder="Profile Picture URL" />
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </template>
+  
+  <script>
+  import api from '../services/api';
+  
+  export default {
+    data() {
+      return {
+        email: '',
+        password: '',
+        name: '',
+        surname: '',
+        profilepic: ''
+      };
+    },
+    methods: {
+      async register() {
+        try {
+          const response = await api.post('/users/register', {
+            email: this.email,
+            password: this.password,
+            name: this.name,
+            surname: this.surname,
+            profilepic: this.profilepic
+          });
+          localStorage.setItem('token', response.data.token);
+          this.$router.push('/profile');
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+  };
+  </script>
+   -->
 
    <template>
     <div class="login">
@@ -34,10 +81,10 @@
           </div>
           <!-- Login form -->
           <div id="login" style="display:none;">
-            <h1>Welcome Back!</h1>
+            <h1>Welcome Back!vbn mm,</h1>
             <form @submit.prevent="loginUser">
               <div class="field-wrap">
-                <label :class="{ active: isActive }">Email Addressbnm<span class="req">*</span></label>
+                <label :class="{ active: isActive }">Email Address<span class="req">*</span></label>
                 <input v-model="login_email" type="email" required autocomplete="off" @focus="activateLabel" @blur="deactivateLabel" />
               </div>
               <div class="field-wrap">
@@ -53,7 +100,7 @@
     </div>
   </template>
   <script>
-  
+  import axios from 'axios';
   export default {
     name: "LoginView",
     data() {
@@ -63,7 +110,7 @@
         last_name: '',
         email: '',
         password: '',
-        login_email: 'dalwaicatline@gmail.com',
+        login_email: '',
         login_password: '',
       };
     },
@@ -93,11 +140,33 @@
         document.getElementById(targetId).style.display = "block";
       },
       async registerUser() {
-        this.$store.dispatch('registerUser',{email:this.email, password:this.password, name:this.first_name,surname:this.last_name}) 
-       
+        try {
+          const response = await axios.post('http://localhost:3000/api/register', {
+            first_name: this.name,
+            last_name: this.surname,
+            email: this.email,
+            password: this.password,
+            image: this.profilepic
+          });
+          alert('Registration successful!');
+          console.log(response.data);
+        } catch (error) {
+          console.error('Registration error:', error);
+          alert('Error during registration');
+        }
       },
-      loginUser() {
-       this.$store.dispatch('loginUser',{email:this.login_email, password:this.login_password}) 
+      async loginUser() {
+        try {
+          const response = await axios.post('http://localhost:3000/api/login', {
+            email: this.login_email,
+            password: this.login_password,
+          });
+          alert('Login successful!');
+          console.log(response.data);
+        } catch (error) {
+          console.error('Login error:', error);
+          alert('Error during login');
+        }
       },
     },
   };

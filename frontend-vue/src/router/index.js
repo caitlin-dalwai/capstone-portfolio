@@ -5,7 +5,7 @@ import TrainingView from '@/views/TrainingView.vue'
 import FacilitiesView from '@/views/FacilitiesView.vue'
 import ContactView from '@/views/ContactView.vue'
 import AdminView from '@/views/AdminView.vue'
-import RegisterComp from '../components/RegisterComp.vue'
+// import RegisterComp from '../components/RegisterComp.vue'
 import LoginComp from '../components/LoginComp.vue'
 import ProfileComp from '../components/ProfileComp.vue'
 import BookingsComp from '../components/BookingsComp.vue'
@@ -52,9 +52,9 @@ const routes = [
     component: AdminView
   },
   {
-    path: '/register',
-    name: 'register',
-    component: RegisterComp
+    // path: '/register',
+    // name: 'register',
+    // component: RegisterComp
   },
   {
     path: '/login',
@@ -77,8 +77,8 @@ const routes = [
     component: BookingView
   },
   {
-    path: '/loginv',
-    name: 'loginv',
+    path: '/register',
+    name: 'register',
     component: LoginView
   }
 ]
