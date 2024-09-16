@@ -8,13 +8,21 @@ let port = 7777
 
 app.use(express.json())
 app.use(cors({
-    'Access-Control-Allow-Origin': 'https://matesandmutts.web.app',
-    'Access-Control-Allow-Credentials': true,
-    headers:['Content-Type','Authorization'],
+    origin: ['https://matesandmutts.web.app','*'],
+    credentials: true,
+
     
 }
 ))
-
+// app.use(( req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Credentials", "true");
+//     res.header("Access-Control-Allow-Methods", "*");
+//     res.header("Access-Control-Request-Methods", "*");
+//     res.header("Access-Control-Allow-Headers", "*");
+//     res.header("Access-Control-Expose-Headers", "Authorization");
+//     next();
+// })
 app.use('/users', usersRoute)
 app.use('/bookings', bookingsRoute)
 
