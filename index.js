@@ -10,7 +10,8 @@ app.use(express.json())
 app.use(cors({
     origin:"*",
     credentials:true,
-    headers:['Content-Type','Authorization']
+    headers:['Content-Type','Authorization','Access-Control-Allow-Credentials: true'],
+    
 }
 ))
 
