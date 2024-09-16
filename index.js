@@ -8,9 +8,9 @@ let port = 7777
 
 app.use(express.json())
 app.use(cors({
-    origin:"*",
-    credentials:true,
-    headers:['Content-Type','Authorization','Access-Control-Allow-Credentials: true'],
+    'Access-Control-Allow-Origin': 'https://matesandmutts.web.app',
+    'Access-Control-Allow-Credentials': true,
+    headers:['Content-Type','Authorization'],
     
 }
 ))
